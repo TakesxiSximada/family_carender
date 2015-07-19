@@ -27,6 +27,18 @@
               dataType: "json",
               success: function(data) {
                   console.log( data);
+                  var cmd = data['command'];
+
+                  switch(cmd){
+                  case 'greeting':
+                      console.log(cmd);
+                      break;
+                  case 'calendar':
+                      console.log(cmd);
+                      break;
+                  default:
+                      console.log('error: ' + cmd);
+                  };
               },
               error: function(XMLHttpRequest, textStatus, errorThrown) {
                   console.log( "ERROR" );
