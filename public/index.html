@@ -19,6 +19,21 @@
     </div>
     <form id="sound"></form>
     <script>
+      setInterval(function (){
+          $.ajax('/watson3', {
+              type: 'GET',
+              processData: false,
+              contentType: false,
+              dataType: "json",
+              success: function(data) {
+                  console.log( data);
+              },
+              error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  console.log( "ERROR" );
+              },
+          });
+      }, 1000);
+
       $('#record-button').on('click', function(){
           var form = $('#sound');
           var xhr = new XMLHttpRequest();
