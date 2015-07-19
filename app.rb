@@ -52,7 +52,9 @@ post '/watson1' do
 
   data = params['voicedata'][:tempfile].read
   content_type 'application/json'
-  watson_speech_to_text(username, password, data)
+  res = watson_speech_to_text(username, password, data)
+  @@global_message = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+  res
 end
 
 post '/watson2' do
@@ -66,14 +68,20 @@ post '/watson2' do
   data = @env['rack.input'].read
   content_type 'application/json'
   res = watson_speech_to_text(username, password, data)
-  @@global_message = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+  m = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+  @@global_message = m.strip
   res
 end
 
 get '/watson3' do
   message = @@global_message
+  command = if message =~ /おはよう|こんにちは|こんばんは/
+              'greeting'
+            elsif message =~ /カレンダー/
+              'calendar'
+            end
 
   content_type 'application/json'
-  { user: 123, message: message, command: 'greeting' }.to_json
+  { user: 123, message: message, command: command }.to_json
 end
 
