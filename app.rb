@@ -5,6 +5,7 @@ require 'net/http'
 require 'json'
 
 @@global_message = 'こんにちは'
+@@global_user = 0
 
 def watson_speech_to_text(username, password, data)
   response = nil
@@ -70,6 +71,7 @@ post '/watson2' do
   res = watson_speech_to_text(username, password, data)
   m = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
   @@global_message = m.strip
+  @@global_user = (Random.new.rand * 10).to_i % 6
   res
 end
 
@@ -81,7 +83,8 @@ get '/watson3' do
               'calendar'
             end
 
+  user = @@global_user
   content_type 'application/json'
-  { user: 123, message: message, command: command }.to_json
+  { user: user, message: message, command: command }.to_json
 end
 
