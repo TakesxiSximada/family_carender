@@ -1,1 +1,2 @@
-web: bundle exec unicorn -p $PORT -c ./config/unicorn_production.rb
+web: bundle exec ruby app.rb -p $PORT
+
