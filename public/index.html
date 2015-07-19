@@ -25,7 +25,7 @@
           xhr.open('GET', '/static/sounds/0001.wav', true);
           xhr.responseType = 'arraybuffer';
           xhr.onload = function(e) {
-             var buffer = new Uint8Array(this.response);
+              var buffer = new Uint8Array(this.response);
               console.log(buffer);
               $.ajax('/watson2', {
                   type: 'post',
@@ -34,13 +34,10 @@
                   data: buffer,
                   dataType: "json",
                   success: function(data) {
-                      alert( data.message );
-                      console.log(data);
+                      console.log( data);
                   },
                   error: function(XMLHttpRequest, textStatus, errorThrown) {
-                      alert( "ERROR" );
-                      alert( textStatus );
-                      alert( errorThrown );
+                      console.log( "ERROR" );
                   },
 
               });
