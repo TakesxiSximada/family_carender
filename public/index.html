@@ -17,10 +17,29 @@
     <div id="record">
       <button>start</button>
     </div>
+
     <script>
-      var selector = '#record';
-      var view = soundy.GlobalView(window, selector);
-      view.setup();
+var selector = '#record';
+var view = soundy.GlobalView(window, selector);
+navigator.getUserMedia = ( navigator.getUserMedia ||
+                           navigator.webkitGetUserMedia ||
+                           navigator.mozGetUserMedia ||
+                           navigator.msGetUserMedia);
+var errorCallback = function () {
+
+}
+
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+
+
+var context = new window.AudioContext();
+
+navigator.getUserMedia({audio: true}, function(stream) {
+    var microphone = context.createMediaStreamSource(stream);
+    var filter = context.createBiquadFilter();
+    microphone.connect(filter);
+    filter.connect(context.destination);
+}, errorCallback);
     </script>
     <!-- <audio> -->
     <!--   <source src="static/sounds/example.mp3"> -->
