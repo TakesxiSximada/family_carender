@@ -25,9 +25,9 @@
           xhr.open('GET', '/static/sounds/0001.wav', true);
           xhr.responseType = 'arraybuffer';
           xhr.onload = function(e) {
-              var buffer = this.response.byteLength;
+             var buffer = new Uint8Array(this.response);
               console.log(buffer);
-              $.ajax('http://family-calendar.mybluemix.net/watson2', {
+              $.ajax('/watson2', {
                   type: 'post',
                   processData: false,
                   contentType: false,
