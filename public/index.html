@@ -19,6 +19,12 @@
     </div>
     <form id="sound"></form>
     <script>
+
+      function view_greeting(user_id){
+          var img = $('<img href="/img/famical/text01.png" width="76" height="76" alt="星" class="star"></img>');
+          $('#user-1').append(img);
+      };
+
       setInterval(function (){
           $.ajax('/watson3', {
               type: 'GET',
@@ -32,6 +38,7 @@
                   switch(cmd){
                   case 'greeting':
                       console.log(cmd);
+                      view_greeting();
                       break;
                   case 'calendar':
                       console.log(cmd);
@@ -101,7 +108,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
     <!-- </audio> -->
 
 	<section class="main clearfix">
-	  <div class="work">
+	  <div class="work" id="user-1">
 		<a href="inner.html">
 		  <img src="img/famical/img01.jpg" class="media" alt=""/>
 		  <div class="caption">
@@ -112,7 +119,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 
-	  <div class="work">
+	  <div class="work" id="user-0">
 		<a href="inner.html">
 		  <img src="img/famical/img02.jpg" class="media" alt=""/>
 		  <div class="caption">
@@ -123,7 +130,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 
-	  <div class="work">
+	  <div class="work" id="user-2">
 		<a href="inner.html">
 		  <img src="img/famical/img03.jpg" class="media" alt=""/>
 		  <div class="caption">
@@ -134,7 +141,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 
-	  <div class="work">
+	  <div class="work" id="user-3">
 		<a href="inner.html">
 		  <img src="img/famical/img01.jpg" class="media" alt=""/>
 		  <div class="caption">
@@ -145,7 +152,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 
-	  <div class="work">
+	  <div class="work" id="user-4">
 		<a href="inner.html">
 		  <img src="img/famical/img02.jpg" class="media" alt=""/>
 		  <div class="caption">
@@ -156,7 +163,7 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 
-	  <div class="work">
+	  <div class="work" id="user-5">
 		<a href="inner.html">
 		  <img src="img/famical/img03.jpg" class="media" alt=""/>
 		  <div class="caption">
