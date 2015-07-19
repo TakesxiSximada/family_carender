@@ -65,10 +65,16 @@
           });
       }, 1000);
 
-function post_sound(){
+function post_sound(command){
+          var wav = null;
+          if (command === 1) { // 1: 起きた？
+              wav = '/static/sounds/okita.wav';
+          } else { // 2: おはよう
+              wav = '/static/sounds/greeting_goodmorning.wav';
+          }
           var form = $('#sound');
           var xhr = new XMLHttpRequest();
-          xhr.open('GET', '/static/sounds/0001.wav', true);
+          xhr.open('GET', wav, true);
           xhr.responseType = 'arraybuffer';
           xhr.onload = function(e) {
               var buffer = new Uint8Array(this.response);
@@ -124,10 +130,10 @@ $("body").keypress(function (e) {
     console.log('key: ' + key_code);
     switch (key_code){
     case 49: // 1 -> 起きた?
-        post_sound();
+        post_sound(1);
         break;
     case 50: // 2 -> おはよう
-        post_sound();
+        post_sound(2);
         break;
     case 51: // 3 -> カレンダー
         location.href = '/calendar.html';
