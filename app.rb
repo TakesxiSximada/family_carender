@@ -4,6 +4,8 @@ require 'uri'
 require 'net/http'
 require 'json'
 
+@@global_message = 'こんにちは'
+
 def watson_speech_to_text(username, password, data)
   response = nil
   url = 'https://stream.watsonplatform.net/speech-to-text/api/v1/recognize?model=ja-JP_BroadbandModel'
@@ -63,20 +65,13 @@ post '/watson2' do
 
   data = @env['rack.input'].read
   content_type 'application/json'
-  watson_speech_to_text(username, password, data)
+  res = watson_speech_to_text(username, password, data)
+  @@global_message = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+  res
 end
 
-post '/watson3' do
-  username = nil
-  password = nil
-  vcap_serivces = ENV['VCAP_SERVICES'] || open('family-calendar_VCAP_Services.json', 'r') { |f| f.read }
-  credentials = JSON.parse(vcap_serivces)['speech_to_text'][0]['credentials']
-  username = credentials['username']
-  password = credentials['password']
-
-  data = @env['rack.input'].read
-  res = watson_speech_to_text(username, password, data)
-  message = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+get '/watson3' do
+  message = @@global_message
 
   content_type 'application/json'
   { user: 123, message: message, command: 'greeting' }.to_json
