@@ -184,6 +184,15 @@ navigator.getUserMedia({audio: true}, function(stream) {
 		</a>
 	  </div>
 	</section><!-- end main -->
-
+    <script>
+    var tag = $('#user-1');
+var img = $('<img class="message" src="/img/famical/logo.jpg" width="76" height="76" alt="星" class="star"></img>');
+img.css({
+    position: 'absolute',
+    top: '10px',
+    left: '10px',
+});
+tag.append(img);
+    </script>
   </body>
 </html>
