@@ -65,7 +65,7 @@
           });
       }, 1000);
 
-      $('#record-button').on('click', function(){
+function post_sound(){
           var form = $('#sound');
           var xhr = new XMLHttpRequest();
           xhr.open('GET', '/static/sounds/0001.wav', true);
@@ -89,7 +89,54 @@
               });
           }
           xhr.send();
-      });
+}
+
+
+      // $('#record-button').on('click', function(){
+      //     var form = $('#sound');
+      //     var xhr = new XMLHttpRequest();
+      //     xhr.open('GET', '/static/sounds/0001.wav', true);
+      //     xhr.responseType = 'arraybuffer';
+      //     xhr.onload = function(e) {
+      //         var buffer = new Uint8Array(this.response);
+      //         console.log(buffer);
+      //         $.ajax('/watson2', {
+      //             type: 'post',
+      //             processData: false,
+      //             contentType: false,
+      //             data: buffer,
+      //             dataType: "json",
+      //             success: function(data) {
+      //                 console.log( data);
+      //             },
+      //             error: function(XMLHttpRequest, textStatus, errorThrown) {
+      //                 console.log( "ERROR" );
+      //             },
+
+      //         });
+      //     }
+      //     xhr.send();
+      // });
+
+
+$("body").keypress(function (e) {
+    var key_code = e.which;
+    console.log('key: ' + key_code);
+    switch (key_code){
+    case 49: // 1 -> 起きた?
+        post_sound();
+        break;
+    case 50: // 2 -> おはよう
+        post_sound();
+        break;
+    case 51: // 3 -> カレンダー
+        location.href = '/calendar.html';
+        break;
+    default:
+        break;
+    }
+});
+
     </script>
 
     <script>
