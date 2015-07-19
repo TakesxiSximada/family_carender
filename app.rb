@@ -26,6 +26,8 @@ def watson_speech_to_text(username, password, data)
 end
 
 get '/' do
+  @@global_message = ''
+  @@global_user = 0
   open('public/index.html', 'r') { |f| f.read }
 end
 
