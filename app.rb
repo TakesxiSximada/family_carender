@@ -2,6 +2,7 @@ require 'sinatra'
 require 'uri'
 require 'net/http'
 require 'json'
+require 'pry'
 
 def watson_speech_to_text(username, password, data)
   response = nil
@@ -39,16 +40,28 @@ get '/watson' do
   watson_speech_to_text(username, password, data)
 end
 
-post '/watson2' do
+post '/watson1' do
   username = nil
   password = nil
-
   vcap_serivces = ENV['VCAP_SERVICES'] || open('family-calendar_VCAP_Services.json', 'r') { |f| f.read }
   credentials = JSON.parse(vcap_serivces)['speech_to_text'][0]['credentials']
   username = credentials['username']
   password = credentials['password']
 
   data = params['voicedata'][:tempfile].read
+  content_type 'application/json'
+  watson_speech_to_text(username, password, data)
+end
+
+post '/watson2' do
+  username = nil
+  password = nil
+  vcap_serivces = ENV['VCAP_SERVICES'] || open('family-calendar_VCAP_Services.json', 'r') { |f| f.read }
+  credentials = JSON.parse(vcap_serivces)['speech_to_text'][0]['credentials']
+  username = credentials['username']
+  password = credentials['password']
+
+  data = @env['rack.input'].read
   content_type 'application/json'
   watson_speech_to_text(username, password, data)
 end
