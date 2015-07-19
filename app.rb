@@ -4,7 +4,7 @@ require 'uri'
 require 'net/http'
 require 'json'
 
-@@global_message = 'こんにちは'
+@@global_message = ''
 @@global_user = 0
 
 def watson_speech_to_text(username, password, data)
@@ -55,6 +55,11 @@ post '/watson1' do
   content_type 'application/json'
   res = watson_speech_to_text(username, password, data)
   @@global_message = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
+  @@global_user =  if @@global_message =~ /おはよう|こんにちは|こんばんは/
+                     1
+                   elsif @@global_message =~ /起きた/
+                     5
+                   end
   res
 end
 
@@ -71,7 +76,12 @@ post '/watson2' do
   res = watson_speech_to_text(username, password, data)
   m = JSON.parse(res)['results'][0]['alternatives'][0]['transcript']
   @@global_message = m.strip
-  @@global_user = (Random.new.rand * 10).to_i % 6
+  @@global_user =  if @@global_message =~ /おはよう|こんにちは|こんばんは/
+                     1
+                   elsif @@global_message =~ /起きた/
+                     5
+                   end
+
   res
 end
 
@@ -79,6 +89,8 @@ get '/watson3' do
   message = @@global_message
   command = if message =~ /おはよう|こんにちは|こんばんは/
               'greeting'
+            elsif message =~ /起きた/
+              'okita'
             elsif message =~ /カレンダー/
               'calendar'
             end
