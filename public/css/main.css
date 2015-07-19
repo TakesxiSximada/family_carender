@@ -309,9 +309,9 @@ h5, h6          { font-weight: bolder }
 }
 
 
-.main .work a:hover .caption{
-    opacity: 1;
-}
+/* .main .work a:hover .caption{ */
+/*     opacity: 1; */
+/* } */
 
 
 .work .caption .work_title{
